@@ -1,0 +1,618 @@
+import React, { useState } from 'react';
+import {
+  Phone,
+  Bot,
+  ClipboardList,
+  CalendarCheck,
+  PhoneMissed,
+  Moon,
+  Headset,
+  HelpCircle,
+  CheckCircle2,
+  Play,
+  ArrowRight,
+  Menu,
+  X,
+  Volume2
+} from 'lucide-react';
+
+export default function App() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeDemoTab, setActiveDemoTab] = useState<'get-demo' | 'live-call'>('live-call');
+
+  const handleDemoNavigation = (e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, tab: 'get-demo' | 'live-call') => {
+    e.preventDefault();
+    setActiveDemoTab(tab);
+    const demoSection = document.getElementById('demo');
+    if (demoSection) {
+      demoSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMenuOpen(false);
+  };
+
+  return (
+    <div className="min-h-screen font-sans text-slate-900 bg-white">
+      {/* Header */}
+      <header className="sticky top-0 z-50 bg-white border-b border-slate-100">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-20">
+            {/* Logo */}
+            <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="flex items-center gap-2 hover:opacity-90 transition-opacity">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-green-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
+                P
+              </div>
+              <div>
+                <span className="font-bold text-2xl tracking-tight">ParrotScout</span>
+                <span className="block text-[10px] text-slate-500 font-medium tracking-wider uppercase -mt-1">
+                  AI Receptionist for HVAC & Plumbing
+                </span>
+              </div>
+            </a>
+
+            {/* Desktop Nav */}
+            <nav className="hidden md:flex items-center gap-8 font-medium text-slate-600">
+              <a href="#how-it-works" className="hover:text-slate-900 transition-colors">How It Works</a>
+              <a href="#who-its-for" className="hover:text-slate-900 transition-colors">Who It's For</a>
+              <a href="#features" className="hover:text-slate-900 transition-colors">Features</a>
+              <a href="#pricing" className="hover:text-slate-900 transition-colors">Pricing</a>
+              <a href="#faqs" className="hover:text-slate-900 transition-colors">FAQs</a>
+            </nav>
+
+            {/* CTA Button */}
+            <div className="hidden md:block">
+              <a href="#demo" onClick={(e) => handleDemoNavigation(e, 'get-demo')} className="bg-[#0B1E36] hover:bg-slate-800 text-white px-6 py-2.5 rounded-md font-semibold flex items-center gap-2 transition-colors">
+                <Phone className="w-4 h-4" />
+                Call the Demo
+              </a>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button 
+              className="md:hidden p-2 text-slate-600"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Nav */}
+        {isMenuOpen && (
+          <div className="md:hidden bg-white border-b border-slate-100 px-4 py-4 space-y-4">
+            <a href="#how-it-works" className="block font-medium text-slate-600">How It Works</a>
+            <a href="#who-its-for" className="block font-medium text-slate-600">Who It's For</a>
+            <a href="#features" className="block font-medium text-slate-600">Features</a>
+            <a href="#pricing" className="block font-medium text-slate-600">Pricing</a>
+            <a href="#faqs" className="block font-medium text-slate-600">FAQs</a>
+            <a href="#demo" onClick={(e) => handleDemoNavigation(e, 'get-demo')} className="w-full bg-[#0B1E36] text-white px-6 py-3 rounded-md font-semibold flex items-center justify-center gap-2">
+              <Phone className="w-4 h-4" />
+              Call the Demo
+            </a>
+          </div>
+        )}
+      </header>
+
+      {/* Hero Section */}
+      <section className="relative bg-white flex flex-col lg:block min-h-[600px] overflow-hidden">
+        
+        {/* Text Content */}
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full pt-16 pb-12 lg:pt-32 lg:pb-40">
+          <div className="w-full lg:w-[45%] lg:pr-8">
+            <div className="max-w-2xl">
+              <div className="inline-block bg-[#E8F5E9] text-[#2E7D32] text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide mb-6">
+                Never Miss Another Call
+              </div>
+              <h1 className="text-4xl sm:text-5xl lg:text-[64px] font-extrabold text-[#0B1E36] leading-[1.1] mb-6 tracking-tight">
+                Stop Missing Calls.<br />
+                <span className="text-[#00A651]">Book More Jobs</span><br />
+                Automatically.
+              </h1>
+              <p className="text-lg text-slate-700 font-medium mb-10 leading-relaxed max-w-xl">
+                ParrotScout answers your HVAC and plumbing calls, captures job details, and helps you respond faster — even after hours.
+              </p>
+              
+              <div className="flex flex-col xl:flex-row gap-4 items-start">
+                <a href="#demo" onClick={(e) => handleDemoNavigation(e, 'get-demo')} className="bg-[#0B3B60] hover:bg-[#092a45] text-white px-6 py-2 rounded-xl font-semibold flex flex-col items-center justify-center transition-colors w-full xl:w-auto h-[72px] flex-shrink-0 shadow-lg">
+                  <span className="flex items-center gap-2 text-lg">
+                    <Phone className="w-5 h-5 fill-current" />
+                    Call the Demo
+                  </span>
+                  <span className="text-[11px] text-blue-200 font-normal mt-0.5">Hear ParrotScout in action now</span>
+                </a>
+                
+                <div className="w-full xl:w-auto flex-1 max-w-md">
+                  <div className="flex rounded-xl shadow-sm border-2 border-slate-200 bg-white p-1.5 h-[72px]">
+                    <input 
+                      type="tel" 
+                      placeholder="Enter your phone number" 
+                      className="flex-1 px-3 sm:px-4 py-2 outline-none text-slate-700 bg-transparent text-sm sm:text-base w-full min-w-0"
+                    />
+                    <button onClick={(e) => handleDemoNavigation(e, 'live-call')} className="bg-[#00A651] hover:bg-green-600 text-white px-4 sm:px-6 py-2 rounded-lg font-bold flex items-center gap-2 transition-colors whitespace-nowrap h-full shadow-md">
+                      <Phone className="w-4 h-4 fill-current hidden sm:block" />
+                      Call Me Now
+                    </button>
+                  </div>
+                  <p className="text-[11px] text-slate-500 mt-2 text-center xl:text-center">
+                    Takes 10 seconds. No spam. Just a real example.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Image */}
+        <div className="w-full lg:absolute lg:inset-y-0 lg:right-0 lg:w-[55%] relative min-h-[400px] lg:min-h-0 z-0 overflow-hidden">
+          <img 
+            src="/assets/hero-bg.png" 
+            alt="HVAC Technician" 
+            className="absolute inset-0 w-full h-full object-cover object-left-top scale-110 origin-top-left"
+            onError={(e) => {
+              e.currentTarget.src = "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=2069&auto=format&fit=crop";
+            }}
+          />
+          {/* Gradient blend on the left edge of the image (Desktop) */}
+          <div className="hidden lg:block absolute inset-y-0 left-0 w-48 bg-gradient-to-r from-white via-white/80 to-transparent"></div>
+          {/* Gradient blend on the top edge of the image (Mobile) */}
+          <div className="block lg:hidden absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-white via-white/80 to-transparent"></div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section id="how-it-works" className="py-20 bg-slate-50">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0B1E36] mb-4">How It Works</h2>
+            <p className="text-lg text-slate-600">Simple, fast, and seamless — your AI receptionist is always on duty.</p>
+          </div>
+
+          <div className="grid md:grid-cols-4 gap-8 relative">
+            {/* Connecting Lines (Desktop) */}
+            <div className="hidden md:block absolute top-12 left-[15%] right-[15%] h-0.5 bg-slate-200 z-0"></div>
+
+            {/* Step 1 */}
+            <div className="relative z-10 flex flex-col items-center text-center">
+              <div className="w-24 h-24 bg-white rounded-full shadow-lg flex items-center justify-center mb-6 border-4 border-slate-50">
+                <Phone className="w-10 h-10 text-green-600" />
+              </div>
+              <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100 w-full h-full">
+                <div className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 text-slate-600 text-sm font-bold mb-3">1</div>
+                <h3 className="text-lg font-bold text-slate-900 mb-2">Customer Calls</h3>
+                <p className="text-sm text-slate-600">They call your business anytime — day or night.</p>
+              </div>
+            </div>
+
+            {/* Step 2 */}
+            <div className="relative z-10 flex flex-col items-center text-center">
+              <div className="w-24 h-24 bg-white rounded-full shadow-lg flex items-center justify-center mb-6 border-4 border-slate-50">
+                <Bot className="w-10 h-10 text-[#0B1E36]" />
+              </div>
+              <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100 w-full h-full">
+                <div className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 text-slate-600 text-sm font-bold mb-3">2</div>
+                <h3 className="text-lg font-bold text-slate-900 mb-2">ParrotScout Answers</h3>
+                <p className="text-sm text-slate-600">Professionally greets them, just like a real receptionist.</p>
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="relative z-10 flex flex-col items-center text-center">
+              <div className="w-24 h-24 bg-white rounded-full shadow-lg flex items-center justify-center mb-6 border-4 border-slate-50">
+                <ClipboardList className="w-10 h-10 text-[#0B1E36]" />
+              </div>
+              <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100 w-full h-full">
+                <div className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 text-slate-600 text-sm font-bold mb-3">3</div>
+                <h3 className="text-lg font-bold text-slate-900 mb-2">Job Details Captured</h3>
+                <p className="text-sm text-slate-600">Collects caller info, service needed, and urgency.</p>
+              </div>
+            </div>
+
+            {/* Step 4 */}
+            <div className="relative z-10 flex flex-col items-center text-center">
+              <div className="w-24 h-24 bg-white rounded-full shadow-lg flex items-center justify-center mb-6 border-4 border-slate-50">
+                <CalendarCheck className="w-10 h-10 text-green-600" />
+              </div>
+              <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-100 w-full h-full">
+                <div className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-slate-100 text-slate-600 text-sm font-bold mb-3">4</div>
+                <h3 className="text-lg font-bold text-slate-900 mb-2">You Follow Up / Book Job</h3>
+                <p className="text-sm text-slate-600">You get an instant notification and follow up faster.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Who It's For Section */}
+      <section id="who-its-for" className="py-20 bg-white">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0B1E36] mb-4">Who It's For</h2>
+            <p className="text-lg text-slate-600">Built for HVAC and plumbing professionals who want to grow without missing opportunities.</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                title: "HVAC Companies",
+                desc: "Never miss heating or cooling service calls again.",
+                img: "/assets/hvac-companies.png",
+                fallback: "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?q=80&w=800&auto=format&fit=crop"
+              },
+              {
+                title: "Plumbing Companies",
+                desc: "Capture every leak, clog, and emergency call — 24/7.",
+                img: "/assets/plumbing-companies.png",
+                fallback: "https://images.unsplash.com/photo-1607472586893-edb57cb31322?q=80&w=800&auto=format&fit=crop"
+              },
+              {
+                title: "Small Service Teams",
+                desc: "Give your team a professional receptionist without the overhead.",
+                img: "/assets/small-service-teams.png",
+                fallback: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?q=80&w=800&auto=format&fit=crop"
+              },
+              {
+                title: "Owner-Operators",
+                desc: "Look bigger, work smarter, and never miss another job.",
+                img: "/assets/owner-operators.png",
+                fallback: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?q=80&w=800&auto=format&fit=crop"
+              }
+            ].map((item, i) => (
+              <div key={i} className="bg-white rounded-xl overflow-hidden shadow-md border border-slate-100 flex flex-col">
+                <div className="h-48 overflow-hidden">
+                  <img 
+                    src={item.img} 
+                    alt={item.title} 
+                    className="w-full h-full object-cover transition-transform hover:scale-105 duration-500" 
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      // If the local .png fails, try .jpg, if that fails, use the Unsplash fallback
+                      if (e.currentTarget.src.endsWith('.png')) {
+                        e.currentTarget.src = item.img.replace('.png', '.jpg');
+                      } else {
+                        e.currentTarget.src = item.fallback;
+                      }
+                    }}
+                  />
+                </div>
+                <div className="p-6 text-center flex-1 flex flex-col justify-center">
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">{item.title}</h3>
+                  <p className="text-slate-600 text-sm">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* We Fix These Problems Section */}
+      <section id="features" className="py-20 bg-[#14233A]">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">We Fix These Problems</h2>
+            <p className="text-lg text-slate-300">Every missed call is money left on the table.</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                icon: <PhoneMissed className="w-10 h-10 text-red-500" />,
+                title: "Missed Calls",
+                desc: "Lost jobs. Lost revenue."
+              },
+              {
+                icon: <Moon className="w-10 h-10 text-blue-400" />,
+                title: "After-Hours Calls Ignored",
+                desc: "Customers call when you're closed — we never are."
+              },
+              {
+                icon: <Headset className="w-10 h-10 text-cyan-400" />,
+                title: "Too Busy to Answer",
+                desc: "You're on a job and can't get to the phone."
+              },
+              {
+                icon: <HelpCircle className="w-10 h-10 text-yellow-400" />,
+                title: "Forgetting Customer Details",
+                desc: "We capture every detail so you don't have to."
+              }
+            ].map((item, i) => (
+              <div key={i} className="bg-[#1C2E4A] border border-[#2A4065] rounded-xl p-8 flex flex-col items-center text-center">
+                <div className="mb-6">{item.icon}</div>
+                <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
+                <p className="text-slate-300 text-sm">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* See How Your Calls Are Handled Section */}
+      <section id="demo" className="py-24 bg-[#F8FAFC] overflow-hidden">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-[4fr_6fr] gap-12 lg:gap-20 items-center">
+            <div className="lg:pr-4">
+              <h2 className="text-4xl lg:text-[42px] font-extrabold text-[#0B1E36] mb-6 leading-[1.15] tracking-tight">
+                See How Your Calls<br />Are Handled
+              </h2>
+              <p className="text-lg text-slate-600 mb-8 leading-relaxed">
+                Enter your number and experience a real call from ParrotScout. Hear how we handle HVAC and plumbing inquiries, just like we would for your business.
+              </p>
+              
+              <div className="relative inline-block w-full">
+                <ul className="space-y-4 mb-4">
+                  {[
+                    "HVAC & Plumbing Specific Script",
+                    "Real-Time Call to Your Phone",
+                    "No Obligation — Try It Now"
+                  ].map((text, i) => (
+                    <li key={i} className="flex items-center gap-3 text-slate-700 font-semibold">
+                      <CheckCircle2 className="w-6 h-6 text-[#2E9E4A] flex-shrink-0" />
+                      {text}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="absolute right-0 bottom-0 translate-x-12 translate-y-4 flex items-center gap-2 text-[#2B5C8F] font-bold italic text-lg">
+                  <span className="text-center leading-tight">Takes Less<br/>Than 10 Seconds!</span>
+                  <svg width="40" height="20" viewBox="0 0 40 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#2B5C8F] mt-2">
+                    <path d="M2 18C10 10 25 5 38 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                    <path d="M32 4L38 10L30 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-200 p-6 sm:p-8 w-full min-h-[480px]">
+              {/* Tabs */}
+              <div className="flex flex-col sm:flex-row gap-4 mb-6">
+                <button 
+                  onClick={() => setActiveDemoTab('get-demo')}
+                  className={`flex-1 py-3 text-[15px] font-bold rounded-lg flex items-center justify-center gap-2 transition-colors ${
+                    activeDemoTab === 'get-demo' 
+                      ? 'bg-white shadow-sm border border-slate-200 text-slate-900' 
+                      : 'border border-blue-100 bg-[#F4F8FB] text-[#2B5C8F] hover:bg-blue-50'
+                  }`}
+                >
+                  <ClipboardList className="w-5 h-5" />
+                  Get Demo
+                </button>
+                <button 
+                  onClick={() => setActiveDemoTab('live-call')}
+                  className={`flex-1 py-3 text-[15px] font-bold rounded-lg flex items-center justify-center gap-2 transition-colors ${
+                    activeDemoTab === 'live-call' 
+                      ? 'bg-white shadow-sm border border-slate-200 text-slate-900' 
+                      : 'border border-blue-100 bg-[#F4F8FB] text-[#2B5C8F] hover:bg-blue-50'
+                  }`}
+                >
+                  <Phone className="w-4 h-4 fill-current" />
+                  Get a Live Demo Call
+                </button>
+              </div>
+
+              {activeDemoTab === 'live-call' && (
+                <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                  {/* Input Form */}
+                  <div className="flex flex-col sm:flex-row gap-4 mb-3">
+                    <div className="flex-1 flex items-center border border-slate-300 rounded-lg px-4 bg-white focus-within:border-[#2E9E4A] focus-within:ring-1 focus-within:ring-[#2E9E4A] h-[52px]">
+                      <span className="text-xl mr-2">🇺🇸</span>
+                      <span className="text-slate-400 mr-3 text-xs">▼</span>
+                      <input 
+                        type="tel" 
+                        placeholder="(201) 555-0123" 
+                        className="w-full h-full outline-none text-slate-700 text-base"
+                      />
+                    </div>
+                    <button className="bg-[#2E9E4A] hover:bg-green-700 text-white px-8 h-[52px] rounded-lg font-bold flex items-center justify-center gap-2 transition-colors whitespace-nowrap shadow-sm">
+                      <Phone className="w-4 h-4 fill-current" />
+                      Call Me Now
+                    </button>
+                  </div>
+                  <p className="text-[13px] text-slate-500 text-center mb-6">
+                    We'll call you instantly and let you hear how ParrotScout handles a real HVAC/plumbing call.
+                  </p>
+
+                  {/* Transcript Area */}
+                  <div className="bg-[#F0F7FF] rounded-xl p-6 border border-blue-100 relative flex flex-col sm:flex-row gap-6 items-center sm:items-end justify-between">
+                    <div className="flex-1 w-full">
+                      <h4 className="font-bold text-[#0B1E36] mb-4 text-[15px]">What You'll Hear:</h4>
+                      <div className="space-y-2.5 text-[13px]">
+                        <div className="flex gap-2">
+                          <span className="font-bold text-slate-700 w-20 flex-shrink-0">ParrotScout:</span>
+                          <span className="text-slate-600">"Thanks for calling! Is this for HVAC or plumbing service?"</span>
+                        </div>
+                        <div className="flex gap-2">
+                          <span className="font-bold text-slate-700 w-20 flex-shrink-0">Caller:</span>
+                          <span className="text-slate-600">"Plumbing — I think I have a leak."</span>
+                        </div>
+                        <div className="flex gap-2">
+                          <span className="font-bold text-slate-700 w-20 flex-shrink-0">ParrotScout:</span>
+                          <span className="text-slate-600">"No problem. Is this an emergency or something that can wait?"</span>
+                        </div>
+                        <div className="flex gap-2">
+                          <span className="font-bold text-slate-700 w-20 flex-shrink-0">Caller:</span>
+                          <span className="text-slate-600">"It's an emergency."</span>
+                        </div>
+                        <div className="flex gap-2">
+                          <span className="font-bold text-slate-700 w-20 flex-shrink-0">ParrotScout:</span>
+                          <span className="text-slate-600">"Got it. Can I get your name, address, and best callback number?"</span>
+                        </div>
+                        <div className="flex gap-2">
+                          <span className="font-bold text-slate-700 w-20 flex-shrink-0">ParrotScout:</span>
+                          <span className="text-slate-600">"Perfect. A technician will contact you shortly. Stay safe!"</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Audio visualizer and play button */}
+                    <div className="flex items-center gap-4 sm:pb-2">
+                      <div className="flex items-center gap-1 h-8">
+                        {[40, 70, 40, 100, 60, 80, 30, 90, 50, 70].map((h, i) => (
+                          <div key={i} className="w-1 bg-[#2E9E4A] rounded-full" style={{ height: `${h}%` }}></div>
+                        ))}
+                      </div>
+                      <button className="w-12 h-12 bg-[#2E9E4A] rounded-full flex items-center justify-center text-white hover:bg-green-700 transition-colors flex-shrink-0 shadow-md">
+                        <Play className="w-5 h-5 ml-1 fill-current" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {activeDemoTab === 'get-demo' && (
+                <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                  <form className="space-y-4 mb-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-1">Name</label>
+                        <input type="text" placeholder="John Doe" className="w-full border border-slate-300 rounded-lg px-4 py-3 outline-none focus:border-[#2E9E4A] focus:ring-1 focus:ring-[#2E9E4A] text-slate-700" />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-1">Business Name</label>
+                        <input type="text" placeholder="Acme HVAC" className="w-full border border-slate-300 rounded-lg px-4 py-3 outline-none focus:border-[#2E9E4A] focus:ring-1 focus:ring-[#2E9E4A] text-slate-700" />
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-1">Phone</label>
+                        <input type="tel" placeholder="(555) 123-4567" className="w-full border border-slate-300 rounded-lg px-4 py-3 outline-none focus:border-[#2E9E4A] focus:ring-1 focus:ring-[#2E9E4A] text-slate-700" />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                        <input type="email" placeholder="john@example.com" className="w-full border border-slate-300 rounded-lg px-4 py-3 outline-none focus:border-[#2E9E4A] focus:ring-1 focus:ring-[#2E9E4A] text-slate-700" />
+                      </div>
+                    </div>
+                    <button type="button" className="w-full bg-[#2E9E4A] hover:bg-green-700 text-white px-8 py-3.5 rounded-lg font-bold text-[15px] transition-colors shadow-sm mt-2">
+                      Submit Request
+                    </button>
+                  </form>
+
+                  <div className="relative flex items-center py-2 mb-6">
+                    <div className="flex-grow border-t border-slate-200"></div>
+                    <span className="flex-shrink-0 mx-4 text-slate-400 text-sm font-bold uppercase tracking-wider">Or</span>
+                    <div className="flex-grow border-t border-slate-200"></div>
+                  </div>
+
+                  <div className="bg-[#F0F7FF] rounded-xl p-6 border border-blue-100 text-center">
+                    <h4 className="font-bold text-[#0B1E36] mb-2 text-[15px]">Call our AI Receptionist right now</h4>
+                    <p className="text-slate-600 text-sm mb-4">Experience it yourself. Our AI will answer immediately.</p>
+                    <a href="tel:+12015550123" className="inline-flex items-center justify-center gap-2 text-2xl font-extrabold text-[#2E9E4A] hover:text-green-700 transition-colors">
+                      <Phone className="w-6 h-6 fill-current" />
+                      (201) 555-0123
+                    </a>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="pt-24 pb-16 bg-white">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-[32px] font-extrabold text-[#0B1E36] mb-3">Simple, Transparent Pricing</h2>
+            <p className="text-[15px] text-slate-500">One plan. Everything you need to never miss a call again.</p>
+          </div>
+
+          <div className="max-w-5xl mx-auto relative">
+            <div className="bg-white rounded-xl border border-slate-200 relative pt-10 pb-12 px-8 sm:px-12 flex flex-col md:flex-row items-center justify-between gap-8">
+              {/* Badge */}
+              <div className="absolute top-0 left-12 md:left-32 -translate-y-1/2 bg-[#E8F0FE] text-[#2B5C8F] text-[11px] font-bold px-3 py-1 rounded uppercase tracking-wider">
+                STARTER PLAN
+              </div>
+              
+              {/* Price */}
+              <div className="flex items-baseline justify-center md:justify-start gap-1 md:w-1/3">
+                <span className="text-[56px] font-extrabold text-[#0B1E36] leading-none tracking-tight">$299</span>
+                <span className="text-slate-500 font-medium text-[15px]">/month</span>
+              </div>
+              
+              {/* Features */}
+              <div className="grid sm:grid-cols-2 gap-x-12 gap-y-3 md:w-2/3">
+                <div className="space-y-3">
+                  {[
+                    "Missed Call Handling",
+                    "After-Hours Answering",
+                    "Lead Capture & Logging",
+                  ].map((feature, i) => (
+                    <div key={i} className="flex items-center gap-2.5">
+                      <CheckCircle2 className="w-[18px] h-[18px] text-[#2E9E4A] flex-shrink-0" />
+                      <span className="text-slate-600 text-[14px] font-medium">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="space-y-3">
+                  {[
+                    "Text & Email Follow-Up",
+                    "Emergency Call Prioritization",
+                    "No Setup Fees • Cancel Anytime"
+                  ].map((feature, i) => (
+                    <div key={i} className="flex items-center gap-2.5">
+                      <CheckCircle2 className="w-[18px] h-[18px] text-[#2E9E4A] flex-shrink-0" />
+                      <span className="text-slate-600 text-[14px] font-medium">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Button */}
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2">
+                <button className="bg-[#2E9E4A] hover:bg-green-700 text-white px-12 py-3 rounded-md font-bold text-[15px] transition-colors shadow-sm whitespace-nowrap">
+                  Get Started Today
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer CTA */}
+      <section className="bg-gradient-to-r from-[#003B9E] to-[#008A3E] rounded-tl-[80px] pt-12 pb-12 mt-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-8 lg:pl-12">
+            <div className="text-center lg:text-left">
+              <h2 className="text-[32px] font-bold text-white mb-2">Stop Missing Jobs Starting Today</h2>
+              <p className="text-blue-100 text-[15px] max-w-2xl">
+                Join HVAC and plumbing pros who trust ParrotScout to keep their phones answered and their schedules full.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+              <a href="#demo" onClick={(e) => handleDemoNavigation(e, 'get-demo')} className="bg-[#2E9E4A] hover:bg-green-700 text-white px-8 py-3 rounded-md font-semibold flex items-center justify-center gap-2 transition-colors">
+                <Phone className="w-4 h-4 fill-current" />
+                Call the Demo
+              </a>
+              <button className="bg-transparent hover:bg-white/10 border-2 border-white text-white px-8 py-3 rounded-md font-semibold transition-colors text-center">
+                Get Started
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-[#081526] py-6 border-t border-slate-800">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} className="flex items-center gap-2 hover:opacity-90 transition-opacity">
+              <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-green-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                P
+              </div>
+              <span className="font-bold text-xl text-white tracking-tight">ParrotScout</span>
+            </a>
+            
+            <div className="flex flex-wrap justify-center gap-8 text-[13px] text-slate-400 font-medium">
+              <a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a>
+              <a href="#who-its-for" className="hover:text-white transition-colors">Who It's For</a>
+              <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
+              <a href="#faqs" className="hover:text-white transition-colors">FAQs</a>
+              <a href="#contact" className="hover:text-white transition-colors">Contact</a>
+            </div>
+            
+            <div className="text-[13px] text-slate-500">
+              © 2025 ParrotScout AI. All rights reserved.
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
