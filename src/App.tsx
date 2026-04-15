@@ -510,56 +510,99 @@ export default function App() {
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-[32px] font-extrabold text-[#0B1E36] mb-3">Simple, Transparent Pricing</h2>
-            <p className="text-[15px] text-slate-500">One plan. Everything you need to never miss a call again.</p>
+            <p className="text-[15px] text-slate-500">Pick the plan that matches your call volume and growth goals.</p>
           </div>
 
-          <div className="max-w-5xl mx-auto relative">
-            <div className="bg-white rounded-xl border border-slate-200 relative pt-10 pb-12 px-8 sm:px-12 flex flex-col md:flex-row items-center justify-between gap-8">
-              {/* Badge */}
-              <div className="absolute top-0 left-12 md:left-32 -translate-y-1/2 bg-[#E8F0FE] text-[#2B5C8F] text-[11px] font-bold px-3 py-1 rounded uppercase tracking-wider">
-                STARTER PLAN
-              </div>
-              
-              {/* Price */}
-              <div className="flex items-baseline justify-center md:justify-start gap-1 md:w-1/3">
-                <span className="text-[56px] font-extrabold text-[#0B1E36] leading-none tracking-tight">$299</span>
-                <span className="text-slate-500 font-medium text-[15px]">/month</span>
-              </div>
-              
-              {/* Features */}
-              <div className="grid sm:grid-cols-2 gap-x-12 gap-y-3 md:w-2/3">
-                <div className="space-y-3">
-                  {[
-                    "Missed Call Handling",
-                    "After-Hours Answering",
-                    "Lead Capture & Logging",
-                  ].map((feature, i) => (
-                    <div key={i} className="flex items-center gap-2.5">
-                      <CheckCircle2 className="w-[18px] h-[18px] text-[#2E9E4A] flex-shrink-0" />
-                      <span className="text-slate-600 text-[14px] font-medium">{feature}</span>
-                    </div>
-                  ))}
+          <div className="max-w-6xl mx-auto">
+            <div className="grid lg:grid-cols-3 gap-6">
+              {/* Starter */}
+              <article className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
+                <p className="text-xs font-bold tracking-[0.16em] uppercase text-[#2E9E4A] mb-4">Starter</p>
+                <div className="flex items-baseline gap-1 mb-6">
+                  <span className="text-5xl font-extrabold text-[#0B1E36] leading-none">$199</span>
+                  <span className="text-slate-500 text-sm font-semibold">/month</span>
                 </div>
-                <div className="space-y-3">
+                <ul className="space-y-3 mb-8">
                   {[
-                    "Text & Email Follow-Up",
-                    "Emergency Call Prioritization",
-                    "No Setup Fees • Cancel Anytime"
+                    "Missed call text-back",
+                    "After-hours response",
+                    "Basic booking link"
                   ].map((feature, i) => (
-                    <div key={i} className="flex items-center gap-2.5">
-                      <CheckCircle2 className="w-[18px] h-[18px] text-[#2E9E4A] flex-shrink-0" />
-                      <span className="text-slate-600 text-[14px] font-medium">{feature}</span>
-                    </div>
+                    <li key={i} className="flex items-start gap-2.5 text-slate-600 text-[14px] font-medium">
+                      <CheckCircle2 className="w-[18px] h-[18px] text-[#2E9E4A] flex-shrink-0 mt-0.5" />
+                      <span>{feature}</span>
+                    </li>
                   ))}
-                </div>
-              </div>
-
-              {/* Button */}
-              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2">
-                <button className="bg-[#2E9E4A] hover:bg-green-700 text-white px-12 py-3 rounded-md font-bold text-[15px] transition-colors shadow-sm whitespace-nowrap">
-                  Get Started Today
+                </ul>
+                <button className="w-full border border-slate-300 hover:border-slate-400 text-slate-800 px-5 py-3 rounded-md font-bold text-sm transition-colors">
+                  Choose Starter
                 </button>
-              </div>
+              </article>
+
+              {/* Growth */}
+              <article className="bg-[#0B1E36] border border-[#0B1E36] rounded-2xl p-8 shadow-xl relative lg:-translate-y-3">
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#FFC928] text-[#1A1A1A] text-[11px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wide">
+                  Most Popular
+                </div>
+                <p className="text-xs font-bold tracking-[0.16em] uppercase text-[#9CD2FF] mb-4 mt-2">Growth</p>
+                <div className="flex items-baseline gap-1 mb-2">
+                  <span className="text-6xl font-extrabold text-white leading-none">$299</span>
+                  <span className="text-blue-100 text-sm font-semibold">/month</span>
+                </div>
+                <p className="text-blue-100 text-[13px] mb-6">Everything in Starter, plus:</p>
+                <ul className="space-y-3 mb-8">
+                  {[
+                    "Smart follow-ups",
+                    "Lead capture",
+                    "Booking assistance"
+                  ].map((feature, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-blue-50 text-[14px] font-medium">
+                      <CheckCircle2 className="w-[18px] h-[18px] text-[#5EDB91] flex-shrink-0 mt-0.5" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <button className="w-full bg-[#2E9E4A] hover:bg-green-700 text-white px-5 py-3 rounded-md font-bold text-sm transition-colors shadow-sm">
+                  Choose Growth
+                </button>
+              </article>
+
+              {/* Pro */}
+              <article className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
+                <p className="text-xs font-bold tracking-[0.16em] uppercase text-[#2B5C8F] mb-4">Pro</p>
+                <div className="flex items-baseline gap-1 mb-2">
+                  <span className="text-5xl font-extrabold text-[#0B1E36] leading-none">$499</span>
+                  <span className="text-slate-500 text-sm font-semibold">/month</span>
+                </div>
+                <p className="text-slate-500 text-[13px] mb-6">Everything in Growth, plus:</p>
+                <ul className="space-y-3 mb-8">
+                  {[
+                    "Advanced call handling",
+                    "CRM / Google Sheets integration",
+                    "Monthly reporting"
+                  ].map((feature, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-slate-600 text-[14px] font-medium">
+                      <CheckCircle2 className="w-[18px] h-[18px] text-[#2E9E4A] flex-shrink-0 mt-0.5" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <button className="w-full border border-slate-300 hover:border-slate-400 text-slate-800 px-5 py-3 rounded-md font-bold text-sm transition-colors">
+                  Choose Pro
+                </button>
+              </article>
+            </div>
+
+            <div className="mt-8 text-center">
+              <p className="inline-flex items-center gap-2 bg-[#FFF8E1] border border-[#FFE299] text-[#5A4A1F] px-4 py-2 rounded-md text-sm font-semibold">
+                One-time setup fee: $99-$199
+              </p>
+            </div>
+
+            <div className="mt-8 flex justify-center">
+              <button className="bg-[#2E9E4A] hover:bg-green-700 text-white px-12 py-3 rounded-md font-bold text-[15px] transition-colors shadow-sm whitespace-nowrap">
+                Get Started Today
+              </button>
             </div>
           </div>
         </div>
