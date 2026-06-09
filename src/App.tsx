@@ -500,7 +500,7 @@ export default function App() {
                           type="tel"
                           value={phoneNumber}
                           onChange={(e) => { setPhoneNumber(e.target.value); setPhoneError(''); setDemoStatus('idle'); }}
-                          placeholder="(507) 765-0557"
+                          placeholder="(507) 123-4567"
                           className="w-full h-full outline-none text-slate-700 text-base bg-transparent pl-1"
                         />
                       </div>
