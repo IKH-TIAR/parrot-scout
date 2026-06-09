@@ -34,7 +34,7 @@ export default function App() {
     const regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
     return getCountries().map(country => {
       let name = country;
-      try { name = regionNames.of(country) || country; } catch (e) {}
+      try { name = regionNames.of(country) || country; } catch (e) { }
       return {
         iso: country,
         callingCode: `+${getCountryCallingCode(country)}`,
@@ -149,7 +149,7 @@ export default function App() {
             </div>
 
             {/* Mobile Menu Button */}
-            <button 
+            <button
               className="md:hidden p-2 text-slate-600"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
@@ -176,7 +176,7 @@ export default function App() {
 
       {/* Hero Section */}
       <section className="relative bg-white flex flex-col lg:block min-h-[600px] overflow-hidden">
-        
+
         {/* Text Content */}
         <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full pt-16 pb-12 lg:pt-32 lg:pb-40">
           <div className="w-full lg:w-[45%] lg:pr-8">
@@ -192,7 +192,7 @@ export default function App() {
               <p className="text-lg text-slate-700 font-medium mb-10 leading-relaxed max-w-xl">
                 ParrotScout answers your HVAC and plumbing calls, captures job details, and helps you respond faster — even after hours.
               </p>
-              
+
               <div className="flex flex-col xl:flex-row gap-4 items-start">
                 <a href="#demo" onClick={(e) => handleDemoNavigation(e, 'get-demo')} className="bg-[#0B3B60] hover:bg-[#092a45] text-white px-6 py-2 rounded-xl font-semibold flex flex-col items-center justify-center transition-colors w-full xl:w-auto h-[72px] flex-shrink-0 shadow-lg">
                   <span className="flex items-center gap-2 text-lg">
@@ -201,23 +201,23 @@ export default function App() {
                   </span>
                   <span className="text-[11px] text-blue-200 font-normal mt-0.5">Hear ParrotScout in action now</span>
                 </a>
-                
+
                 <div className="w-full xl:w-auto flex-1 max-w-md">
                   <div className="w-full">
                     <div className="flex rounded-xl shadow-sm border-2 border-slate-200 bg-white p-1.5 h-[72px] focus-within:border-[#2E9E4A] focus-within:ring-1 focus-within:ring-[#2E9E4A]">
-                      <select 
-                        value={countryCode} 
+                      <select
+                        value={countryCode}
                         onChange={(e) => { setCountryCode(e.target.value as CountryCode); setPhoneError(''); setDemoStatus('idle'); }}
                         className="bg-transparent text-sm sm:text-base pl-2 pr-1 outline-none appearance-none cursor-pointer max-w-[120px]"
                       >
                         {countriesList.map(c => <option key={c.iso} value={c.iso} title={c.name}>{c.iso} ({c.callingCode})</option>)}
                       </select>
                       <span className="text-slate-400 mr-1 text-xs pointer-events-none self-center">▼</span>
-                      <input 
-                        type="tel" 
+                      <input
+                        type="tel"
                         value={phoneNumber}
                         onChange={(e) => { setPhoneNumber(e.target.value); setPhoneError(''); setDemoStatus('idle'); }}
-                        placeholder="Enter phone number" 
+                        placeholder="Enter phone number"
                         className="flex-1 px-2 sm:px-3 py-2 outline-none text-slate-700 bg-transparent text-sm sm:text-base w-full min-w-0"
                       />
                       <button onClick={handleCallDemo} disabled={demoStatus === 'calling'} className="bg-[#00A651] hover:bg-green-600 text-white px-4 sm:px-6 py-2 rounded-lg font-bold flex items-center gap-2 transition-colors whitespace-nowrap h-full shadow-md disabled:opacity-70">
@@ -240,9 +240,9 @@ export default function App() {
 
         {/* Right Image */}
         <div className="w-full lg:absolute lg:inset-y-0 lg:right-0 lg:w-[55%] relative min-h-[400px] lg:min-h-0 z-0 overflow-hidden">
-          <img 
-            src="/assets/hero-bg.png" 
-            alt="HVAC Technician" 
+          <img
+            src="/assets/hero-bg.png"
+            alt="HVAC Technician"
             className="absolute inset-0 w-full h-full object-cover object-left-top scale-110 origin-top-left"
             onError={(e) => {
               e.currentTarget.src = "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?q=80&w=2069&auto=format&fit=crop";
@@ -355,10 +355,10 @@ export default function App() {
             ].map((item, i) => (
               <div key={i} className="bg-white rounded-xl overflow-hidden shadow-md border border-slate-100 flex flex-col">
                 <div className="h-48 overflow-hidden">
-                  <img 
-                    src={item.img} 
-                    alt={item.title} 
-                    className="w-full h-full object-cover transition-transform hover:scale-105 duration-500" 
+                  <img
+                    src={item.img}
+                    alt={item.title}
+                    className="w-full h-full object-cover transition-transform hover:scale-105 duration-500"
                     referrerPolicy="no-referrer"
                     onError={(e) => {
                       // If the local .png fails, try .jpg, if that fails, use the Unsplash fallback
@@ -432,7 +432,7 @@ export default function App() {
               <p className="text-lg text-slate-600 mb-8 leading-relaxed">
                 Enter your number and experience a real call from ParrotScout. Hear how we handle HVAC and plumbing inquiries, just like we would for your business.
               </p>
-              
+
               <div className="relative inline-block w-full">
                 <ul className="space-y-4 mb-4">
                   {[
@@ -448,10 +448,10 @@ export default function App() {
                 </ul>
 
                 <div className="absolute right-0 bottom-0 translate-x-12 translate-y-4 flex items-center gap-2 text-[#2B5C8F] font-bold italic text-lg">
-                  <span className="text-center leading-tight">Takes Less<br/>Than 10 Seconds!</span>
+                  <span className="text-center leading-tight">Takes Less<br />Than 10 Seconds!</span>
                   <svg width="40" height="20" viewBox="0 0 40 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-[#2B5C8F] mt-2">
-                    <path d="M2 18C10 10 25 5 38 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                    <path d="M32 4L38 10L30 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M2 18C10 10 25 5 38 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                    <path d="M32 4L38 10L30 16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
               </div>
@@ -460,24 +460,22 @@ export default function App() {
             <div className="bg-white rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-200 p-6 sm:p-8 w-full min-h-[480px]">
               {/* Tabs */}
               <div className="flex flex-col sm:flex-row gap-4 mb-6">
-                <button 
+                <button
                   onClick={() => setActiveDemoTab('get-demo')}
-                  className={`flex-1 py-3 text-[15px] font-bold rounded-lg flex items-center justify-center gap-2 transition-colors ${
-                    activeDemoTab === 'get-demo' 
-                      ? 'bg-white shadow-sm border border-slate-200 text-slate-900' 
-                      : 'border border-blue-100 bg-[#F4F8FB] text-[#2B5C8F] hover:bg-blue-50'
-                  }`}
+                  className={`flex-1 py-3 text-[15px] font-bold rounded-lg flex items-center justify-center gap-2 transition-colors ${activeDemoTab === 'get-demo'
+                    ? 'bg-white shadow-sm border border-slate-200 text-slate-900'
+                    : 'border border-blue-100 bg-[#F4F8FB] text-[#2B5C8F] hover:bg-blue-50'
+                    }`}
                 >
                   <ClipboardList className="w-5 h-5" />
                   Get Demo
                 </button>
-                <button 
+                <button
                   onClick={() => setActiveDemoTab('live-call')}
-                  className={`flex-1 py-3 text-[15px] font-bold rounded-lg flex items-center justify-center gap-2 transition-colors ${
-                    activeDemoTab === 'live-call' 
-                      ? 'bg-white shadow-sm border border-slate-200 text-slate-900' 
-                      : 'border border-blue-100 bg-[#F4F8FB] text-[#2B5C8F] hover:bg-blue-50'
-                  }`}
+                  className={`flex-1 py-3 text-[15px] font-bold rounded-lg flex items-center justify-center gap-2 transition-colors ${activeDemoTab === 'live-call'
+                    ? 'bg-white shadow-sm border border-slate-200 text-slate-900'
+                    : 'border border-blue-100 bg-[#F4F8FB] text-[#2B5C8F] hover:bg-blue-50'
+                    }`}
                 >
                   <Phone className="w-4 h-4 fill-current" />
                   Get a Live Demo Call
@@ -490,19 +488,19 @@ export default function App() {
                   <div className="flex flex-col mb-6">
                     <div className="flex flex-col sm:flex-row gap-4 mb-1">
                       <div className="flex-1 flex items-center border border-slate-300 rounded-lg px-2 bg-white focus-within:border-[#2E9E4A] focus-within:ring-1 focus-within:ring-[#2E9E4A] h-[52px]">
-                        <select 
-                          value={countryCode} 
+                        <select
+                          value={countryCode}
                           onChange={(e) => { setCountryCode(e.target.value as CountryCode); setPhoneError(''); setDemoStatus('idle'); }}
                           className="bg-transparent text-base pl-2 pr-1 outline-none appearance-none cursor-pointer max-w-[120px]"
                         >
                           {countriesList.map(c => <option key={c.iso} value={c.iso} title={c.name}>{c.iso} ({c.callingCode})</option>)}
                         </select>
                         <span className="text-slate-400 mr-2 text-xs pointer-events-none">▼</span>
-                        <input 
-                          type="tel" 
+                        <input
+                          type="tel"
                           value={phoneNumber}
                           onChange={(e) => { setPhoneNumber(e.target.value); setPhoneError(''); setDemoStatus('idle'); }}
-                          placeholder="(575) 383-9095" 
+                          placeholder="(507) 7650557"
                           className="w-full h-full outline-none text-slate-700 text-base bg-transparent pl-1"
                         />
                       </div>
@@ -550,7 +548,7 @@ export default function App() {
                         </div>
                       </div>
                     </div>
-                    
+
                     {/* Audio visualizer and play button */}
                     <div className="flex items-center gap-4 sm:pb-2">
                       <div className="flex items-center gap-1 h-8">
@@ -572,21 +570,21 @@ export default function App() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-slate-700 mb-1">Name</label>
-                        <input required type="text" value={leadForm.name} onChange={e => setLeadForm({...leadForm, name: e.target.value})} placeholder="John Doe" className="w-full border border-slate-300 rounded-lg px-4 py-3 outline-none focus:border-[#2E9E4A] focus:ring-1 focus:ring-[#2E9E4A] text-slate-700" />
+                        <input required type="text" value={leadForm.name} onChange={e => setLeadForm({ ...leadForm, name: e.target.value })} placeholder="John Doe" className="w-full border border-slate-300 rounded-lg px-4 py-3 outline-none focus:border-[#2E9E4A] focus:ring-1 focus:ring-[#2E9E4A] text-slate-700" />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-slate-700 mb-1">Business Name</label>
-                        <input type="text" value={leadForm.businessName} onChange={e => setLeadForm({...leadForm, businessName: e.target.value})} placeholder="Acme HVAC" className="w-full border border-slate-300 rounded-lg px-4 py-3 outline-none focus:border-[#2E9E4A] focus:ring-1 focus:ring-[#2E9E4A] text-slate-700" />
+                        <input type="text" value={leadForm.businessName} onChange={e => setLeadForm({ ...leadForm, businessName: e.target.value })} placeholder="Acme HVAC" className="w-full border border-slate-300 rounded-lg px-4 py-3 outline-none focus:border-[#2E9E4A] focus:ring-1 focus:ring-[#2E9E4A] text-slate-700" />
                       </div>
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-slate-700 mb-1">Phone</label>
-                        <input required type="tel" value={leadForm.phone} onChange={e => setLeadForm({...leadForm, phone: e.target.value})} placeholder="(555) 123-4567" className="w-full border border-slate-300 rounded-lg px-4 py-3 outline-none focus:border-[#2E9E4A] focus:ring-1 focus:ring-[#2E9E4A] text-slate-700" />
+                        <input required type="tel" value={leadForm.phone} onChange={e => setLeadForm({ ...leadForm, phone: e.target.value })} placeholder="(555) 123-4567" className="w-full border border-slate-300 rounded-lg px-4 py-3 outline-none focus:border-[#2E9E4A] focus:ring-1 focus:ring-[#2E9E4A] text-slate-700" />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
-                        <input required type="email" value={leadForm.email} onChange={e => setLeadForm({...leadForm, email: e.target.value})} placeholder="john@example.com" className="w-full border border-slate-300 rounded-lg px-4 py-3 outline-none focus:border-[#2E9E4A] focus:ring-1 focus:ring-[#2E9E4A] text-slate-700" />
+                        <input required type="email" value={leadForm.email} onChange={e => setLeadForm({ ...leadForm, email: e.target.value })} placeholder="john@example.com" className="w-full border border-slate-300 rounded-lg px-4 py-3 outline-none focus:border-[#2E9E4A] focus:ring-1 focus:ring-[#2E9E4A] text-slate-700" />
                       </div>
                     </div>
                     <button type="submit" disabled={leadStatus === 'submitting'} className="w-full bg-[#2E9E4A] hover:bg-green-700 text-white px-8 py-3.5 rounded-lg font-bold text-[15px] transition-colors shadow-sm mt-2 disabled:opacity-70">
@@ -607,7 +605,7 @@ export default function App() {
                     <p className="text-slate-600 text-sm mb-4">Experience it yourself. Our AI will answer immediately.</p>
                     <a href="tel:+15753839095" className="inline-flex items-center justify-center gap-2 text-2xl font-extrabold text-[#2E9E4A] hover:text-green-700 transition-colors">
                       <Phone className="w-6 h-6 fill-current" />
-                      (575) 383-9095
+                      (507) 765-0557
                     </a>
                   </div>
                 </div>
@@ -753,7 +751,7 @@ export default function App() {
               </div>
               <span className="font-bold text-xl text-white tracking-tight">ParrotScout</span>
             </a>
-            
+
             <div className="flex flex-wrap justify-center gap-8 text-[13px] text-slate-400 font-medium">
               <a href="#how-it-works" className="hover:text-white transition-colors">How It Works</a>
               <a href="#who-its-for" className="hover:text-white transition-colors">Who It's For</a>
@@ -761,7 +759,7 @@ export default function App() {
               <a href="#faqs" className="hover:text-white transition-colors">FAQs</a>
               <a href="#contact" className="hover:text-white transition-colors">Contact</a>
             </div>
-            
+
             <div className="text-[13px] text-slate-500">
               © 2025 ParrotScout AI. All rights reserved.
             </div>

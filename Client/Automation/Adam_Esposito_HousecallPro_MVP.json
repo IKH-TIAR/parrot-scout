@@ -1,0 +1,143 @@
+{
+  "name": "Housecall Pro Technician Prep (MVP)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            { "field": "hours", "hoursInterval": 24 }
+          ]
+        }
+      },
+      "id": "schedule-001",
+      "name": "Every Evening (6 PM)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [ 100, 300 ]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.housecallpro.com/jobs",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "scheduled_start_min", "value": "={{ $now.plus(1, 'day').startOf('day') }}" },
+            { "name": "scheduled_start_max", "value": "={{ $now.plus(1, 'day').endOf('day') }}" }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer YOUR_HOUSECALL_PRO_API_KEY" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "http-hcp-001",
+      "name": "Fetch Tomorrow's Jobs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [ 300, 300 ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "jobs",
+        "options": {}
+      },
+      "id": "item-lists-001",
+      "name": "Loop Through Jobs",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 3,
+      "position": [ 500, 300 ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "messages": {
+          "messageValues": [
+            {
+              "role": "system",
+              "content": "You are an expert home services operations manager. Based on the scope of work and customer notes, recommend a concise list of tools, consumables, and materials the technician should bring. Do not write a long paragraph, just a bulleted list."
+            },
+            {
+              "role": "user",
+              "content": "=Scope of work: {{ $json.description }}\nCustomer Notes: {{ $json.customer_notes }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "openai-001",
+      "name": "AI Tool Recommendations",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1.1,
+      "position": [ 700, 300 ],
+      "credentials": {
+        "openAiApi": { "id": "REPLACE_WITH_OPENAI_CRED", "name": "OpenAI account" }
+      }
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "sms_message",
+              "value": "=*Job Assignment for Tomorrow*\n\n*Customer:* {{ $('Loop Through Jobs').item.json.customer.first_name }} {{ $('Loop Through Jobs').item.json.customer.last_name }}\n*Address:* {{ $('Loop Through Jobs').item.json.address.street }}, {{ $('Loop Through Jobs').item.json.address.city }}\n*Time:* {{ $('Loop Through Jobs').item.json.schedule.scheduled_start }}\n\n*Scope of Work:*\n{{ $('Loop Through Jobs').item.json.description }}\n\n*Notes:*\n{{ $('Loop Through Jobs').item.json.customer_notes }}\n\n*AI Recommended Prep:*\n{{ $json.message.content }}"
+            },
+            {
+              "name": "technician_phone",
+              "value": "={{ $('Loop Through Jobs').item.json.assigned_employees[0].phone_number }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "set-001",
+      "name": "Format SMS Message",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [ 900, 300 ]
+    },
+    {
+      "parameters": {
+        "from": "YOUR_TWILIO_NUMBER",
+        "to": "={{ $json.technician_phone }}",
+        "message": "={{ $json.sms_message }}",
+        "options": {}
+      },
+      "id": "twilio-001",
+      "name": "Send SMS to Technician",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [ 1100, 300 ],
+      "credentials": {
+        "twilioApi": { "id": "REPLACE_WITH_TWILIO_CRED", "name": "Twilio account" }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Every Evening (6 PM)": {
+      "main": [ [ { "node": "Fetch Tomorrow's Jobs", "type": "main", "index": 0 } ] ]
+    },
+    "Fetch Tomorrow's Jobs": {
+      "main": [ [ { "node": "Loop Through Jobs", "type": "main", "index": 0 } ] ]
+    },
+    "Loop Through Jobs": {
+      "main": [ [ { "node": "AI Tool Recommendations", "type": "main", "index": 0 } ] ]
+    },
+    "AI Tool Recommendations": {
+      "main": [ [ { "node": "Format SMS Message", "type": "main", "index": 0 } ] ]
+    },
+    "Format SMS Message": {
+      "main": [ [ { "node": "Send SMS to Technician", "type": "main", "index": 0 } ] ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": []
+}

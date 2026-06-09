@@ -1,0 +1,539 @@
+{
+  "name": "ParrotScout AI Voice Agency - VAPI (Combined)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "vapi-server",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "7d53c1f3-3999-4d3e-9eb3-b2d0194b5fae",
+      "name": "VAPI Server Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -720,
+        80
+      ],
+      "webhookId": "vapi-server-webhook-id"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.body.message.type }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              },
+              "rightValue": "end-of-call-report",
+              "id": "vapi-cond-eocr"
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "165e2efb-0f08-432c-8d1e-5e04cc562bf7",
+      "name": "Is End-of-Call Report?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -496,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={}",
+        "options": {}
+      },
+      "id": "652eaf44-910d-4386-9e92-e295e491273c",
+      "name": "Respond OK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        -256,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "sunjilllb4@gmail.com",
+        "subject": "=New ParrotScout Demo Lead (Voice Call)",
+        "message": "=<h2>New Demo Call Lead</h2><table style=\"border-collapse:collapse;font-family:sans-serif\"><tr><td style=\"padding:8px;font-weight:bold\">Caller Phone</td><td style=\"padding:8px\">{{ $json.body.message.call.customer ? $json.body.message.call.customer.number : 'Unknown' }}</td></tr><tr><td style=\"padding:8px;font-weight:bold\">Name</td><td style=\"padding:8px\">{{ $json.body.message.call.analysis && $json.body.message.call.analysis.structuredData ? ($json.body.message.call.analysis.structuredData.callerName || 'not provided') : 'not provided' }}</td></tr><tr><td style=\"padding:8px;font-weight:bold\">Address</td><td style=\"padding:8px\">{{ $json.body.message.call.analysis && $json.body.message.call.analysis.structuredData ? ($json.body.message.call.analysis.structuredData.serviceAddress || 'not provided') : 'not provided' }}</td></tr><tr><td style=\"padding:8px;font-weight:bold\">Callback Number</td><td style=\"padding:8px\">{{ $json.body.message.call.analysis && $json.body.message.call.analysis.structuredData && $json.body.message.call.analysis.structuredData.callbackPhone ? $json.body.message.call.analysis.structuredData.callbackPhone : ($json.body.message.call.customer ? $json.body.message.call.customer.number : 'Unknown') }}</td></tr><tr><td style=\"padding:8px;font-weight:bold\">Call Summary</td><td style=\"padding:8px;color:#666\">{{ $json.body.message.call.analysis ? ($json.body.message.call.analysis.summary || '(no summary)') : '(no summary)' }}</td></tr><tr><td style=\"padding:8px;font-weight:bold\">Full Transcript</td><td style=\"padding:8px;color:#555;font-size:12px\">{{ $json.body.message.call.artifact ? ($json.body.message.call.artifact.transcript || '(no transcript)') : '(no transcript)' }}</td></tr></table><p style=\"color:#999;font-size:12px\">{{ $now.toLocaleString() }}</p>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "1969bc2a-134d-4de6-88de-571c66f9294c",
+      "name": "Email Lead Details (VAPI)",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "webhookId": "3f3cdb1d-1e13-4941-92f9-db3122515f73",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "VrxlMJqcV3C2Uq1K",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "from": "+15077650557",
+        "to": "+15753839095",
+        "message": "=New ParrotScout Lead! (Voice Call)\nPhone: {{ $json.body.message.call.customer ? $json.body.message.call.customer.number : 'Unknown' }}\nName: {{ $json.body.message.call.analysis && $json.body.message.call.analysis.structuredData ? ($json.body.message.call.analysis.structuredData.callerName || 'not provided') : 'not provided' }}\nAddress: {{ $json.body.message.call.analysis && $json.body.message.call.analysis.structuredData ? ($json.body.message.call.analysis.structuredData.serviceAddress || 'not provided') : 'not provided' }}\nCallback: {{ $json.body.message.call.analysis && $json.body.message.call.analysis.structuredData && $json.body.message.call.analysis.structuredData.callbackPhone ? $json.body.message.call.analysis.structuredData.callbackPhone : ($json.body.message.call.customer ? $json.body.message.call.customer.number : 'Unknown') }}",
+        "options": {}
+      },
+      "id": "9aa96556-7bc8-4f1e-9208-80b7e48a15e2",
+      "name": "SMS Lead to Admin (VAPI)",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [
+        0,
+        192
+      ],
+      "credentials": {
+        "twilioApi": {
+          "id": "JJQwLCvDNRDNkNho",
+          "name": "Twilio account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "instant-demo",
+        "options": {}
+      },
+      "id": "203d9d8f-181c-4e64-adbc-90164ed827d7",
+      "name": "Instant Demo Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -720,
+        304
+      ],
+      "webhookId": "e1553bac-35e4-4d2b-b26d-2f20de528987"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.vapi.ai/call",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"assistantId\": \"ced2646b-4dab-44fd-a78b-2f4a950fa12b\",\n  \"phoneNumberId\": \"a15aaff5-94cd-403b-9174-be4b7109a0ca\",\n  \"customer\": {\n    \"number\": \"{{ $json.body.phone }}\"\n  }\n}",
+        "options": {}
+      },
+      "id": "9fad8dcc-f335-4f81-af68-2d0772aaba36",
+      "name": "Initiate VAPI Demo Call",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -448,
+        304
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "3FOqvQ3wROqsdz8n",
+          "name": "VAPI API Key"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-form",
+        "options": {}
+      },
+      "id": "f58c0a04-dc72-492e-bf42-82c3705f8da1",
+      "name": "Lead Form Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -720,
+        544
+      ],
+      "webhookId": "470efb72-6c25-4de6-9d7c-05e60f3d3fe7"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1BVl3BwM_Aa3EUrDOEnddGHTMhE8E7pRJs365KTsH3Ow/edit?usp=sharing",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1BVl3BwM_Aa3EUrDOEnddGHTMhE8E7pRJs365KTsH3Ow/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $json.body.name }}",
+            "Phone": "={{ $json.body.phone }}",
+            "Email": "={{ $json.body.email }}",
+            "Business Name": "={{ $json.body.businessName }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Business Name",
+              "displayName": "Business Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Phone",
+              "displayName": "Phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "f0525669-42fe-4bfe-8b93-721796e2d40d",
+      "name": "Save Lead to Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -480,
+        544
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "7aTv4sNgLBtXTZzR",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "from": "+15077650557",
+        "to": "+15753839095",
+        "message": "=New ParrotScout Lead!\nName: {{ $(\"Lead Form Webhook\").item.json.body.name }}\nBusiness: {{ $(\"Lead Form Webhook\").item.json.body.businessName || \"N/A\" }}\nPhone: {{ $(\"Lead Form Webhook\").item.json.body.phone }}\nEmail: {{ $(\"Lead Form Webhook\").item.json.body.email }}",
+        "options": {}
+      },
+      "id": "a21cc7cc-f0ef-4f7f-b7d6-163cdb0bff2a",
+      "name": "Text Admin Alert",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        464
+      ],
+      "credentials": {
+        "twilioApi": {
+          "id": "JJQwLCvDNRDNkNho",
+          "name": "Twilio account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "sunjilllb4@gmail.com",
+        "subject": "New ParrotScout Lead",
+        "message": "=<h2>New Demo Request</h2><table style=\"font-family:sans-serif;border-collapse:collapse\"><tr><td style=\"padding:6px 12px;font-weight:bold\">Name</td><td style=\"padding:6px 12px\">{{ $(\"Lead Form Webhook\").item.json.body.name }}</td></tr><tr><td style=\"padding:6px 12px;font-weight:bold\">Business</td><td style=\"padding:6px 12px\">{{ $(\"Lead Form Webhook\").item.json.body.businessName || \"N/A\" }}</td></tr><tr><td style=\"padding:6px 12px;font-weight:bold\">Phone</td><td style=\"padding:6px 12px\">{{ $(\"Lead Form Webhook\").item.json.body.phone }}</td></tr><tr><td style=\"padding:6px 12px;font-weight:bold\">Email</td><td style=\"padding:6px 12px\">{{ $(\"Lead Form Webhook\").item.json.body.email }}</td></tr></table><p style=\"color:#999;font-size:12px;margin-top:16px\">{{ $now.toLocaleString() }}</p>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "c1f71b1c-6570-497c-b362-9aa0ffbce2dd",
+      "name": "Email Lead Alert",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        -240,
+        640
+      ],
+      "webhookId": "9c8e6232-8665-4721-800b-6720ab3e4287",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "VrxlMJqcV3C2Uq1K",
+          "name": "Gmail OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "id": "1ed71104-d29f-47f7-b24d-e331121b147a",
+      "name": "Sync Config Every 6 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -720,
+        784
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "sync-config",
+        "options": {}
+      },
+      "id": "f300d6bd-f82a-4093-b5a4-75d9cdad0b6c",
+      "name": "Manual Config Sync Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -720,
+        960
+      ],
+      "webhookId": "sync-config-webhook-id"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1fkwlcNo0hNkZnxbgpCUhsHlXGCfTI06DySJ_JAZkWHU/edit?usp=sharing",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1fkwlcNo0hNkZnxbgpCUhsHlXGCfTI06DySJ_JAZkWHU/edit#gid=0"
+        },
+        "options": {}
+      },
+      "id": "19d9f052-e462-40e1-a132-879d3cbdd0eb",
+      "name": "Read Config Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -480,
+        864
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "7aTv4sNgLBtXTZzR",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "https://api.vapi.ai/assistant/ced2646b-4dab-44fd-a78b-2f4a950fa12b",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": {\n    \"model\": \"gpt-4o-mini\",\n    \"provider\": \"openai\",\n    \"temperature\": 0.2,\n    \"messages\": [\n      {\n        \"role\": \"system\",\n        \"content\": {{ JSON.stringify($json['ai_system_prompt'] || '') }}\n      }\n    ]\n  }\n}",
+        "options": {}
+      },
+      "id": "fb51c8f2-8749-4573-873c-40ebcbdd8615",
+      "name": "Update VAPI Assistant Prompt",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -240,
+        864
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "3FOqvQ3wROqsdz8n",
+          "name": "VAPI API Key"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "VAPI Server Webhook": {
+      "main": [
+        [
+          {
+            "node": "Is End-of-Call Report?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Is End-of-Call Report?": {
+      "main": [
+        [
+          {
+            "node": "Respond OK",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respond OK": {
+      "main": [
+        [
+          {
+            "node": "Email Lead Details (VAPI)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "SMS Lead to Admin (VAPI)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Instant Demo Webhook": {
+      "main": [
+        [
+          {
+            "node": "Initiate VAPI Demo Call",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lead Form Webhook": {
+      "main": [
+        [
+          {
+            "node": "Save Lead to Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Lead to Sheet": {
+      "main": [
+        [
+          {
+            "node": "Email Lead Alert",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Text Admin Alert",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sync Config Every 6 Hours": {
+      "main": [
+        [
+          {
+            "node": "Read Config Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Config Sync Trigger": {
+      "main": [
+        [
+          {
+            "node": "Read Config Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Config Sheet": {
+      "main": [
+        [
+          {
+            "node": "Update VAPI Assistant Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "4770fb02-9d3d-42e8-a523-f76973a0c323",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8246cc9c21e708d451701bfe3a798bf5be39e1c7609b0e1a51e7bfca9247900a"
+  },
+  "id": "boYUGGEjNqjeWWHL",
+  "tags": []
+}

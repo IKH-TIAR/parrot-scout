@@ -1,0 +1,202 @@
+{
+  "name": "Housecall Pro Technician Prep (MVP)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 24
+            }
+          ]
+        }
+      },
+      "id": "6fcedfed-dea7-4e09-9a18-7669dac4d267",
+      "name": "Every Evening (6 PM)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://api.housecallpro.com/jobs",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "scheduled_start_min",
+              "value": "={{ $now.plus(1, 'day').startOf('day') }}"
+            },
+            {
+              "name": "scheduled_start_max",
+              "value": "={{ $now.plus(1, 'day').endOf('day') }}"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer YOUR_HOUSECALL_PRO_API_KEY"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8f9adee7-4138-4ef9-9ee4-f25f29bb1c80",
+      "name": "Fetch Tomorrow's Jobs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        208,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "jobs",
+        "options": {}
+      },
+      "id": "a6bf3c4f-3759-413b-8b15-e7e71cab557a",
+      "name": "Loop Through Jobs",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 3,
+      "position": [
+        400,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {},
+        "requestOptions": {}
+      },
+      "id": "54f39bbb-f939-44b2-b01b-b6a1634a9f18",
+      "name": "AI Tool Recommendations",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1.1,
+      "position": [
+        608,
+        0
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "5HSdWGpCgcuchNHc",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "f36c1f61-ad14-49c8-9881-1a8a5b655783",
+      "name": "Format SMS Message",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.2,
+      "position": [
+        800,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "from": "YOUR_TWILIO_NUMBER",
+        "to": "={{ $json.technician_phone }}",
+        "message": "={{ $json.sms_message }}",
+        "options": {}
+      },
+      "id": "7dc258fc-d7e1-4da4-ba7b-cfa0c7e1ca62",
+      "name": "Send SMS to Technician",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [
+        1008,
+        0
+      ],
+      "credentials": {
+        "twilioApi": {
+          "id": "JhdxrG9updzZ2Ny3",
+          "name": "Twilio account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Every Evening (6 PM)": {
+      "main": [
+        [
+          {
+            "node": "Fetch Tomorrow's Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Tomorrow's Jobs": {
+      "main": [
+        [
+          {
+            "node": "Loop Through Jobs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Through Jobs": {
+      "main": [
+        [
+          {
+            "node": "AI Tool Recommendations",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Tool Recommendations": {
+      "main": [
+        [
+          {
+            "node": "Format SMS Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format SMS Message": {
+      "main": [
+        [
+          {
+            "node": "Send SMS to Technician",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": true
+  },
+  "versionId": "853c7324-ca0f-4335-9abe-2a797f34f49b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "62a6065a5449cc6c21fcaf4d7350e567b4ccca9845768973e2206d5911208e0c"
+  },
+  "id": "ZF3QcWYXyfOW9CCV",
+  "tags": []
+}

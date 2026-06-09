@@ -1,0 +1,142 @@
+{
+  "name": "ParrotScout Config Sync (Sheet → VAPI)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "id": "sync-schedule-001",
+      "name": "Run Every 6 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-2320, 400]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "sync-config",
+        "options": {}
+      },
+      "id": "sync-manual-001",
+      "name": "Manual Sync Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [-2320, 600],
+      "webhookId": "sync-config-webhook-id"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1fkwlcNo0hNkZnxbgpCUhsHlXGCfTI06DySJ_JAZkWHU/edit?usp=sharing",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1fkwlcNo0hNkZnxbgpCUhsHlXGCfTI06DySJ_JAZkWHU/edit#gid=0"
+        },
+        "options": {}
+      },
+      "id": "sync-read-sheet-001",
+      "name": "Read Config Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [-2080, 500],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "jIjKJwUKv54jP30y",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "https://api.vapi.ai/assistant/ced2646b-4dab-44fd-a78b-2f4a950fa12b",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": {\n    \"model\": \"gpt-4o-mini\",\n    \"provider\": \"openai\",\n    \"temperature\": 0.2,\n    \"messages\": [\n      {\n        \"role\": \"system\",\n        \"content\": {{ JSON.stringify($json['ai_system_prompt'] || '') }}\n      }\n    ]\n  },\n  \"firstMessage\": \"Hello, thank you for calling ParrotScout. Do you need help with HVAC or plumbing today?\"\n}",
+        "options": {}
+      },
+      "id": "sync-patch-vapi-001",
+      "name": "Update VAPI Assistant",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-1840, 500],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "VAPI_HEADER_AUTH_CREDENTIAL_ID",
+          "name": "VAPI API Key"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Run Every 6 Hours": {
+      "main": [
+        [
+          {
+            "node": "Read Config Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Sync Trigger": {
+      "main": [
+        [
+          {
+            "node": "Read Config Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Config Sheet": {
+      "main": [
+        [
+          {
+            "node": "Update VAPI Assistant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "config-sync-v1",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3af6e4256d4c0af110bc517a71545fbcc47d8692f4bc7795a6fe104577da5153"
+  },
+  "tags": []
+}
