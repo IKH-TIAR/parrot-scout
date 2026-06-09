@@ -67,7 +67,7 @@ export default function App() {
     try {
       const parsed = parsePhoneNumber(phoneNumber, countryCode);
       const fullNumber = parsed.number; // E.164 format e.g. +12015550123
-      const res = await fetch('https://parrotscoutai.app.n8n.cloud/webhook/instant-demo', {
+      const res = await fetch('https://yinowop242.app.n8n.cloud/webhook/instant-demo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone: fullNumber })
@@ -86,7 +86,7 @@ export default function App() {
     e.preventDefault();
     setLeadStatus('submitting');
     try {
-      const res = await fetch('https://parrotscoutai.app.n8n.cloud/webhook/lead-form', {
+      const res = await fetch('https://yinowop242.app.n8n.cloud/webhook/lead-form', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(leadForm)
@@ -500,7 +500,7 @@ export default function App() {
                           type="tel"
                           value={phoneNumber}
                           onChange={(e) => { setPhoneNumber(e.target.value); setPhoneError(''); setDemoStatus('idle'); }}
-                          placeholder="(507) 7650557"
+                          placeholder="(507) 765-0557"
                           className="w-full h-full outline-none text-slate-700 text-base bg-transparent pl-1"
                         />
                       </div>
@@ -603,7 +603,7 @@ export default function App() {
                   <div className="bg-[#F0F7FF] rounded-xl p-6 border border-blue-100 text-center">
                     <h4 className="font-bold text-[#0B1E36] mb-2 text-[15px]">Call our AI Receptionist right now</h4>
                     <p className="text-slate-600 text-sm mb-4">Experience it yourself. Our AI will answer immediately.</p>
-                    <a href="tel:+15753839095" className="inline-flex items-center justify-center gap-2 text-2xl font-extrabold text-[#2E9E4A] hover:text-green-700 transition-colors">
+                    <a href="tel:+15077650557" className="inline-flex items-center justify-center gap-2 text-2xl font-extrabold text-[#2E9E4A] hover:text-green-700 transition-colors">
                       <Phone className="w-6 h-6 fill-current" />
                       (507) 765-0557
                     </a>
