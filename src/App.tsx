@@ -67,7 +67,7 @@ export default function App() {
     try {
       const parsed = parsePhoneNumber(phoneNumber, countryCode);
       const fullNumber = parsed.number; // E.164 format e.g. +12015550123
-      const res = await fetch('https://yinowop242.app.n8n.cloud/webhook/instant-demo', {
+      const res = await fetch('https://parrotscoutai.app.n8n.cloud/webhook/instant-demo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone: fullNumber })
@@ -86,7 +86,7 @@ export default function App() {
     e.preventDefault();
     setLeadStatus('submitting');
     try {
-      const res = await fetch('https://yinowop242.app.n8n.cloud/webhook/lead-form', {
+      const res = await fetch('https://parrotscoutai.app.n8n.cloud/webhook/lead-form', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(leadForm)
