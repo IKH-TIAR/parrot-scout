@@ -74,6 +74,7 @@ export default function App() {
       });
       if (res.ok) {
         setDemoStatus('success');
+        setPhoneNumber('');
       } else {
         setDemoStatus('error');
       }
@@ -217,6 +218,7 @@ export default function App() {
                         type="tel"
                         value={phoneNumber}
                         onChange={(e) => { setPhoneNumber(e.target.value); setPhoneError(''); setDemoStatus('idle'); }}
+                        autoComplete="off"
                         placeholder="Enter phone number"
                         className="flex-1 px-2 sm:px-3 py-2 outline-none text-slate-700 bg-transparent text-sm sm:text-base w-full min-w-0"
                       />
@@ -500,7 +502,8 @@ export default function App() {
                           type="tel"
                           value={phoneNumber}
                           onChange={(e) => { setPhoneNumber(e.target.value); setPhoneError(''); setDemoStatus('idle'); }}
-                          placeholder="(507) 123-4567"
+                          autoComplete="off"
+                          placeholder="(575) 383-9095"
                           className="w-full h-full outline-none text-slate-700 text-base bg-transparent pl-1"
                         />
                       </div>
@@ -603,9 +606,9 @@ export default function App() {
                   <div className="bg-[#F0F7FF] rounded-xl p-6 border border-blue-100 text-center">
                     <h4 className="font-bold text-[#0B1E36] mb-2 text-[15px]">Call our AI Receptionist right now</h4>
                     <p className="text-slate-600 text-sm mb-4">Experience it yourself. Our AI will answer immediately.</p>
-                    <a href="tel:+15077650557" className="inline-flex items-center justify-center gap-2 text-2xl font-extrabold text-[#2E9E4A] hover:text-green-700 transition-colors">
+                    <a href="tel:+15753839095" className="inline-flex items-center justify-center gap-2 text-2xl font-extrabold text-[#2E9E4A] hover:text-green-700 transition-colors">
                       <Phone className="w-6 h-6 fill-current" />
-                      (507) 765-0557
+                      (575) 383-9095
                     </a>
                   </div>
                 </div>
@@ -629,7 +632,7 @@ export default function App() {
               <article className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
                 <p className="text-xs font-bold tracking-[0.16em] uppercase text-[#2E9E4A] mb-4">Starter</p>
                 <div className="flex items-baseline gap-1 mb-6">
-                  <span className="text-5xl font-extrabold text-[#0B1E36] leading-none">$199</span>
+                  <span className="text-5xl font-extrabold text-[#0B1E36] leading-none">$99</span>
                   <span className="text-slate-500 text-sm font-semibold">/month</span>
                 </div>
                 <ul className="space-y-3 mb-8">
@@ -644,7 +647,7 @@ export default function App() {
                     </li>
                   ))}
                 </ul>
-                <button className="w-full border border-slate-300 hover:border-slate-400 text-slate-800 px-5 py-3 rounded-md font-bold text-sm transition-colors">
+                <button onClick={() => { const el = document.getElementById('contact'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }} className="w-full border border-slate-300 hover:border-slate-400 text-slate-800 px-5 py-3 rounded-md font-bold text-sm transition-colors">
                   Choose Starter
                 </button>
               </article>
@@ -656,7 +659,7 @@ export default function App() {
                 </div>
                 <p className="text-xs font-bold tracking-[0.16em] uppercase text-[#9CD2FF] mb-4 mt-2">Growth</p>
                 <div className="flex items-baseline gap-1 mb-2">
-                  <span className="text-6xl font-extrabold text-white leading-none">$299</span>
+                  <span className="text-6xl font-extrabold text-white leading-none">$199</span>
                   <span className="text-blue-100 text-sm font-semibold">/month</span>
                 </div>
                 <p className="text-blue-100 text-[13px] mb-6">Everything in Starter, plus:</p>
@@ -672,7 +675,7 @@ export default function App() {
                     </li>
                   ))}
                 </ul>
-                <button className="w-full bg-[#2E9E4A] hover:bg-green-700 text-white px-5 py-3 rounded-md font-bold text-sm transition-colors shadow-sm">
+                <button onClick={() => { const el = document.getElementById('contact'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }} className="w-full bg-[#2E9E4A] hover:bg-green-700 text-white px-5 py-3 rounded-md font-bold text-sm transition-colors shadow-sm">
                   Choose Growth
                 </button>
               </article>
@@ -681,7 +684,7 @@ export default function App() {
               <article className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm">
                 <p className="text-xs font-bold tracking-[0.16em] uppercase text-[#2B5C8F] mb-4">Pro</p>
                 <div className="flex items-baseline gap-1 mb-2">
-                  <span className="text-5xl font-extrabold text-[#0B1E36] leading-none">$499</span>
+                  <span className="text-5xl font-extrabold text-[#0B1E36] leading-none">$399</span>
                   <span className="text-slate-500 text-sm font-semibold">/month</span>
                 </div>
                 <p className="text-slate-500 text-[13px] mb-6">Everything in Growth, plus:</p>
@@ -697,7 +700,7 @@ export default function App() {
                     </li>
                   ))}
                 </ul>
-                <button className="w-full border border-slate-300 hover:border-slate-400 text-slate-800 px-5 py-3 rounded-md font-bold text-sm transition-colors">
+                <button onClick={() => { const el = document.getElementById('contact'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }} className="w-full border border-slate-300 hover:border-slate-400 text-slate-800 px-5 py-3 rounded-md font-bold text-sm transition-colors">
                   Choose Pro
                 </button>
               </article>
@@ -705,14 +708,84 @@ export default function App() {
 
             <div className="mt-8 text-center">
               <p className="inline-flex items-center gap-2 bg-[#FFF8E1] border border-[#FFE299] text-[#5A4A1F] px-4 py-2 rounded-md text-sm font-semibold">
-                One-time setup fee: $99-$199
+                One-time setup fee: $99-$99
               </p>
             </div>
 
             <div className="mt-8 flex justify-center">
-              <button className="bg-[#2E9E4A] hover:bg-green-700 text-white px-12 py-3 rounded-md font-bold text-[15px] transition-colors shadow-sm whitespace-nowrap">
+              <button onClick={() => { const el = document.getElementById('contact'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }} className="bg-[#2E9E4A] hover:bg-green-700 text-white px-12 py-3 rounded-md font-bold text-[15px] transition-colors shadow-sm whitespace-nowrap">
                 Get Started Today
               </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section id="faqs" className="py-20 bg-[#F8FAFC]">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#0B1E36] mb-4">Frequently Asked Questions</h2>
+            <p className="text-lg text-slate-600">Everything you need to know before getting started.</p>
+          </div>
+          <div className="max-w-3xl mx-auto space-y-4">
+            {[
+              {
+                q: "How does it handle after-hours or emergency calls?",
+                a: "ParrotScout never sleeps. It answers every call instantly, 24/7 — including nights, weekends, and holidays. Emergency callers are greeted professionally and their details are captured and sent to you immediately, so you can follow up as soon as you're available."
+              },
+              {
+                q: "Does it sound like a real person?",
+                a: "Yes. ParrotScout uses a natural-sounding AI voice that speaks in short, conversational sentences. Most callers don't realize they're talking to an AI — they just know they got a fast, professional response."
+              },
+              {
+                q: "How do I receive the job details?",
+                a: "As soon as a call ends, you receive an instant email notification with the caller's name, service address, callback number, and a full call summary — plus the complete call transcript. All data is also automatically logged to your Google Sheet."
+              },
+              {
+                q: "Can it handle multiple calls at once?",
+                a: "Absolutely. Unlike a human receptionist, ParrotScout handles unlimited simultaneous calls. Whether you get 1 call or 100 calls at the same time, every single one gets answered immediately."
+              }
+            ].map((item, i) => (
+              <details key={i} className="group bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+                <summary className="flex items-center justify-between gap-4 px-6 py-5 cursor-pointer list-none font-semibold text-[#0B1E36] text-[15px] hover:bg-slate-50 transition-colors">
+                  {item.q}
+                  <span className="text-[#2E9E4A] text-xl font-bold flex-shrink-0 group-open:rotate-45 transition-transform duration-200">+</span>
+                </summary>
+                <div className="px-6 pb-5 pt-1 text-slate-600 text-[14px] leading-relaxed border-t border-slate-100">
+                  {item.a}
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-14 bg-white">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl mx-auto text-center">
+            <h2 className="text-2xl md:text-3xl font-bold text-[#0B1E36] mb-3">Get in Touch</h2>
+            <p className="text-slate-600 mb-8">Ready to get started or have a question? Reach out to us directly.</p>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <a href="mailto:ParrotScoutai@gmail.com" className="flex items-center gap-3 bg-[#F8FAFC] border border-slate-200 rounded-xl px-5 py-4 hover:border-[#2E9E4A] hover:bg-[#F0FAF4] transition-colors group">
+                <div className="w-9 h-9 bg-[#E8F5E9] rounded-full flex items-center justify-center flex-shrink-0">
+                  <svg className="w-4 h-4 text-[#2E9E4A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                </div>
+                <div className="text-left">
+                  <p className="text-[11px] text-slate-400 font-medium uppercase tracking-wide">General</p>
+                  <p className="text-sm font-semibold text-[#0B1E36] group-hover:text-[#2E9E4A] transition-colors">ParrotScoutai@gmail.com</p>
+                </div>
+              </a>
+              <a href="mailto:Info@parrotscoutai.com" className="flex items-center gap-3 bg-[#F8FAFC] border border-slate-200 rounded-xl px-5 py-4 hover:border-[#2E9E4A] hover:bg-[#F0FAF4] transition-colors group">
+                <div className="w-9 h-9 bg-[#E8F5E9] rounded-full flex items-center justify-center flex-shrink-0">
+                  <svg className="w-4 h-4 text-[#2E9E4A]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                </div>
+                <div className="text-left">
+                  <p className="text-[11px] text-slate-400 font-medium uppercase tracking-wide">Info</p>
+                  <p className="text-sm font-semibold text-[#0B1E36] group-hover:text-[#2E9E4A] transition-colors">Info@parrotscoutai.com</p>
+                </div>
+              </a>
             </div>
           </div>
         </div>
@@ -733,7 +806,7 @@ export default function App() {
                 <Phone className="w-4 h-4 fill-current" />
                 Call the Demo
               </a>
-              <button className="bg-transparent hover:bg-white/10 border-2 border-white text-white px-8 py-3 rounded-md font-semibold transition-colors text-center">
+              <button onClick={() => { const el = document.getElementById('contact'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }} className="bg-transparent hover:bg-white/10 border-2 border-white text-white px-8 py-3 rounded-md font-semibold transition-colors text-center">
                 Get Started
               </button>
             </div>
